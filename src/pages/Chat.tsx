@@ -21,7 +21,7 @@ function getResponse(input: string): string {
 
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([
-    { id: 0, role: "assistant", content: "Hi! I'm your SmartPlate AI assistant. 👋\n\nI can help you with diet advice, food alternatives, and nutritional guidance. Ask me anything!" },
+    { id: 0, role: "assistant", content: "Hi! I'm your SmartPlate AI assistant 🌿\n\nI can help you with diet advice, food alternatives, and nutritional guidance. Ask me anything!" },
   ]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
@@ -46,17 +46,17 @@ export default function Chat() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] flex flex-col max-w-3xl mx-auto">
+    <div className="min-h-[calc(100vh-3.5rem)] flex flex-col max-w-2xl mx-auto">
       {/* Header */}
-      <div className="px-6 py-4 border-b border-border">
+      <div className="px-6 py-4 border-b border-border bg-card">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center">
-            <Sparkles className="h-4 w-4 text-primary" />
+          <div className="h-10 w-10 rounded-2xl gradient-mint flex items-center justify-center">
+            <Sparkles className="h-4 w-4 text-primary-foreground" />
           </div>
           <div>
-            <h2 className="font-display font-semibold text-sm">AI Assistant</h2>
-            <span className="text-xs text-muted-foreground flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+            <h2 className="font-display font-extrabold text-sm">AI Assistant</h2>
+            <span className="text-xs text-muted-foreground flex items-center gap-1.5 font-medium">
+              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
               Online
             </span>
           </div>
@@ -73,18 +73,18 @@ export default function Chat() {
               animate={{ opacity: 1, y: 0 }}
               className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
             >
-              <div className={`h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                msg.role === "assistant" ? "bg-primary/10" : "bg-secondary"
+              <div className={`h-8 w-8 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                msg.role === "assistant" ? "gradient-mint" : "bg-secondary"
               }`}>
                 {msg.role === "assistant" ? (
-                  <Bot className="h-4 w-4 text-primary" />
+                  <Bot className="h-4 w-4 text-primary-foreground" />
                 ) : (
                   <User className="h-4 w-4 text-muted-foreground" />
                 )}
               </div>
-              <div className={`max-w-[75%] rounded-xl px-4 py-3 text-sm ${
+              <div className={`max-w-[75%] rounded-2xl px-4 py-3 text-sm ${
                 msg.role === "assistant"
-                  ? "glass-card"
+                  ? "soft-card"
                   : "bg-primary text-primary-foreground"
               }`}>
                 <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -94,25 +94,21 @@ export default function Chat() {
         </AnimatePresence>
 
         {typing && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex items-center gap-3"
-          >
-            <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Bot className="h-4 w-4 text-primary" />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-xl gradient-mint flex items-center justify-center">
+              <Bot className="h-4 w-4 text-primary-foreground" />
             </div>
-            <div className="glass-card px-4 py-3 flex items-center gap-1">
-              <span className="h-2 w-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "0ms" }} />
-              <span className="h-2 w-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "150ms" }} />
-              <span className="h-2 w-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "300ms" }} />
+            <div className="soft-card px-4 py-3 flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
+              <span className="h-2 w-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }} />
+              <span className="h-2 w-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: "300ms" }} />
             </div>
           </motion.div>
         )}
       </div>
 
       {/* Input */}
-      <div className="px-6 py-4 border-t border-border">
+      <div className="px-6 py-4 border-t border-border bg-card">
         <form
           onSubmit={(e) => { e.preventDefault(); sendMessage(); }}
           className="flex gap-3"
@@ -121,18 +117,18 @@ export default function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about your diet..."
-            className="bg-secondary border-border"
+            className="bg-secondary/50 border-border rounded-xl h-11"
           />
           <Button
             type="submit"
             size="icon"
             disabled={!input.trim()}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 flex-shrink-0"
+            className="gradient-mint text-primary-foreground rounded-xl h-11 w-11 flex-shrink-0"
           >
             <Send className="h-4 w-4" />
           </Button>
         </form>
-        <p className="text-xs text-muted-foreground mt-2 text-center">
+        <p className="text-[10px] text-muted-foreground mt-2 text-center font-medium">
           SmartPlate AI provides general nutritional guidance. Consult a healthcare professional for medical advice.
         </p>
       </div>

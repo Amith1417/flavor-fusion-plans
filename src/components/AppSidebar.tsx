@@ -17,10 +17,10 @@ import {
 
 const mainItems = [
   { title: "Home", url: "/", icon: Home },
-  { title: "Diet Planner", url: "/planner", icon: UtensilsCrossed },
+  { title: "Meal Plan", url: "/planner", icon: UtensilsCrossed },
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Risk Alerts", url: "/alerts", icon: Shield },
-  { title: "AI Assistant", url: "/chat", icon: MessageCircle },
+  { title: "Alerts", url: "/alerts", icon: Shield },
+  { title: "AI Chat", url: "/chat", icon: MessageCircle },
 ];
 
 const accountItems = [
@@ -35,27 +35,32 @@ export function AppSidebar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-border">
+    <Sidebar collapsible="icon" className="border-r border-border bg-sidebar">
       <SidebarHeader className="p-4">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+          <div className="h-9 w-9 rounded-2xl gradient-mint flex items-center justify-center flex-shrink-0">
             <UtensilsCrossed className="h-4 w-4 text-primary-foreground" />
           </div>
           {!collapsed && (
-            <span className="font-display font-bold text-lg text-foreground">SmartPlate</span>
+            <span className="font-display font-extrabold text-lg text-foreground">SmartPlate</span>
           )}
         </div>
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-muted-foreground">Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-muted-foreground font-bold text-xs">Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={isActive(item.url)}>
-                    <NavLink to={item.url} end className="hover:bg-sidebar-accent" activeClassName="bg-sidebar-accent text-primary font-medium">
+                    <NavLink
+                      to={item.url}
+                      end
+                      className="hover:bg-sidebar-accent rounded-xl"
+                      activeClassName="bg-primary/10 text-primary font-bold"
+                    >
                       <item.icon className="mr-2 h-4 w-4" />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
@@ -67,13 +72,18 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel className="text-muted-foreground">Account</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-muted-foreground font-bold text-xs">Account</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {accountItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={isActive(item.url)}>
-                    <NavLink to={item.url} end className="hover:bg-sidebar-accent" activeClassName="bg-sidebar-accent text-primary font-medium">
+                    <NavLink
+                      to={item.url}
+                      end
+                      className="hover:bg-sidebar-accent rounded-xl"
+                      activeClassName="bg-primary/10 text-primary font-bold"
+                    >
                       <item.icon className="mr-2 h-4 w-4" />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
@@ -87,7 +97,7 @@ export function AppSidebar() {
 
       <SidebarFooter className="p-4">
         {!collapsed && (
-          <p className="text-xs text-muted-foreground text-center">
+          <p className="text-xs text-muted-foreground text-center font-medium">
             SmartPlate AI v1.0
           </p>
         )}

@@ -1,6 +1,12 @@
+import avocadoToast from "@/assets/avocado-toast.jpg";
+import salmonSalad from "@/assets/salmon-salad.jpg";
+import smoothieBowl from "@/assets/smoothie-bowl.jpg";
+import chickenBroccoli from "@/assets/chicken-broccoli.jpg";
+import mixedNuts from "@/assets/mixed-nuts.jpg";
+
 export const diseases = [
   "Diabetes", "Hypertension", "PCOS", "Thyroid", "Heart Disease",
-  "Kidney Disease", "Obesity", "Anemia", "Cholesterol", "Arthritis"
+  "Kidney Disease", "Obesity", "Anemia", "Cholesterol", "IBS", "Celiac Disease"
 ];
 
 export const dietaryPreferences = ["Vegetarian", "Non-Vegetarian", "Vegan"];
@@ -8,7 +14,12 @@ export const dietaryPreferences = ["Vegetarian", "Non-Vegetarian", "Vegan"];
 export interface MealItem {
   name: string;
   calories: number;
+  protein: number;
+  fat: number;
+  carbs: number;
   benefits: string;
+  image: string;
+  mealTime: string;
   warning?: string;
 }
 
@@ -18,6 +29,10 @@ export interface MealPlan {
   snacks: MealItem[];
   dinner: MealItem[];
   totalCalories: number;
+  totalProtein: number;
+  totalFat: number;
+  totalCarbs: number;
+  goalCalories: number;
   riskAlerts: RiskAlert[];
 }
 
@@ -29,6 +44,7 @@ export interface RiskAlert {
 }
 
 export interface UserProfile {
+  name: string;
   age: number;
   weight: number;
   height: number;
@@ -38,67 +54,66 @@ export interface UserProfile {
 
 export function generateMealPlan(profile: UserProfile): MealPlan {
   const isVeg = profile.preference === "Vegetarian" || profile.preference === "Vegan";
-  const isVegan = profile.preference === "Vegan";
 
   const breakfast: MealItem[] = [
     {
-      name: isVegan ? "Chia Seed Pudding with Almond Milk" : "Greek Yogurt with Mixed Berries",
-      calories: 220,
-      benefits: "Rich in antioxidants and probiotics for gut health",
-    },
-    {
-      name: "Steel-Cut Oatmeal with Walnuts & Flax",
-      calories: 310,
-      benefits: "High fiber content helps regulate blood sugar levels",
-    },
-    {
-      name: isVeg ? "Moong Dal Cheela with Mint Chutney" : "Egg White Omelette with Spinach",
-      calories: 180,
-      benefits: "High protein, low glycemic index meal",
+      name: "Avocado Toast",
+      calories: 280,
+      protein: 12,
+      fat: 15,
+      carbs: 28,
+      benefits: "Low Glycemic for blood sugar control",
+      image: avocadoToast,
+      mealTime: "Breakfast · 7am",
     },
   ];
 
   const lunch: MealItem[] = [
     {
-      name: isVeg ? "Quinoa Buddha Bowl with Tahini" : "Grilled Salmon with Asparagus",
-      calories: 420,
-      benefits: "Omega-3 fatty acids reduce inflammation",
-    },
-    {
-      name: "Brown Rice with Dal & Seasonal Vegetables",
-      calories: 380,
-      benefits: "Complete protein with essential amino acids",
-    },
-    {
-      name: isVeg ? "Chickpea & Sweet Potato Curry" : "Lean Chicken Breast with Steamed Broccoli",
+      name: isVeg ? "Quinoa Buddha Bowl" : "Salmon Salad",
       calories: 350,
-      benefits: "Balanced macros for sustained energy",
+      protein: 25,
+      fat: 15,
+      carbs: 30,
+      benefits: "Low Glycemic for blood pressure",
+      image: salmonSalad,
+      mealTime: "Lunch · 1pm",
     },
   ];
 
   const snacks: MealItem[] = [
     {
-      name: "Mixed Nuts & Seeds (30g)",
+      name: "Mixed Nuts & Seeds",
       calories: 170,
-      benefits: "Healthy fats support heart and brain health",
+      protein: 6,
+      fat: 14,
+      carbs: 8,
+      benefits: "Healthy fats for heart health",
+      image: mixedNuts,
+      mealTime: "Snack · 4pm",
     },
     {
-      name: "Green Smoothie (Spinach, Banana, Ginger)",
-      calories: 140,
-      benefits: "Iron-rich, anti-inflammatory properties",
+      name: "Berry Smoothie Bowl",
+      calories: 200,
+      protein: 8,
+      fat: 4,
+      carbs: 36,
+      benefits: "Rich in antioxidants & vitamins",
+      image: smoothieBowl,
+      mealTime: "Snack · 11am",
     },
   ];
 
   const dinner: MealItem[] = [
     {
-      name: isVeg ? "Palak Paneer with Roti" : "Grilled Fish with Sautéed Vegetables",
-      calories: 380,
-      benefits: "Light yet nutritious evening meal",
-    },
-    {
-      name: "Vegetable Soup with Multigrain Bread",
-      calories: 250,
-      benefits: "Easy to digest, supports overnight recovery",
+      name: isVeg ? "Palak Paneer & Roti" : "Grilled Chicken & Broccoli",
+      calories: 400,
+      protein: 30,
+      fat: 18,
+      carbs: 32,
+      benefits: "High protein for muscle recovery",
+      image: chickenBroccoli,
+      mealTime: "Dinner · 7pm",
     },
   ];
 
@@ -106,49 +121,48 @@ export function generateMealPlan(profile: UserProfile): MealPlan {
 
   if (profile.diseases.includes("Diabetes")) {
     riskAlerts.push(
-      { food: "White Rice", disease: "Diabetes", severity: "high", message: "White rice has a high glycemic index. Use brown rice or quinoa instead." },
-      { food: "Sugary Beverages", disease: "Diabetes", severity: "high", message: "Avoid all sugary drinks. Opt for water, green tea, or infused water." },
-      { food: "Processed Foods", disease: "Diabetes", severity: "medium", message: "Processed foods contain hidden sugars. Always check labels." }
+      { food: "White Rice", disease: "Diabetes", severity: "high", message: "High glycemic index. Use brown rice or quinoa instead." },
+      { food: "Sugary Beverages", disease: "Diabetes", severity: "high", message: "Avoid all sugary drinks. Opt for water or green tea." },
+      { food: "Processed Foods", disease: "Diabetes", severity: "medium", message: "Hidden sugars in processed foods. Always check labels." }
     );
   }
-
   if (profile.diseases.includes("Hypertension")) {
     riskAlerts.push(
-      { food: "Excess Salt", disease: "Hypertension", severity: "high", message: "Limit sodium intake to less than 1,500mg/day. Avoid pickles and papad." },
-      { food: "Red Meat", disease: "Hypertension", severity: "medium", message: "Red meat can increase blood pressure. Choose lean proteins." }
+      { food: "Excess Salt", disease: "Hypertension", severity: "high", message: "Limit sodium to less than 1,500mg/day." },
+      { food: "Red Meat", disease: "Hypertension", severity: "medium", message: "May increase blood pressure. Choose lean proteins." }
     );
   }
-
   if (profile.diseases.includes("PCOS")) {
     riskAlerts.push(
-      { food: "Dairy Products", disease: "PCOS", severity: "medium", message: "Excess dairy may worsen hormonal imbalance. Limit intake." },
-      { food: "Refined Carbs", disease: "PCOS", severity: "high", message: "Avoid maida, white bread. Choose whole grains to manage insulin." }
+      { food: "Dairy Products", disease: "PCOS", severity: "medium", message: "Excess dairy may worsen hormonal imbalance." },
+      { food: "Refined Carbs", disease: "PCOS", severity: "high", message: "Avoid white bread, maida. Choose whole grains." }
     );
   }
-
   if (profile.diseases.includes("Cholesterol")) {
     riskAlerts.push(
-      { food: "Fried Foods", disease: "Cholesterol", severity: "high", message: "Avoid deep-fried foods. Use air-frying or baking instead." },
-      { food: "Full-Fat Dairy", disease: "Cholesterol", severity: "medium", message: "Switch to low-fat dairy alternatives." }
+      { food: "Fried Foods", disease: "Cholesterol", severity: "high", message: "Avoid deep-fried foods. Use air-frying or baking." }
     );
   }
 
-  if (profile.diseases.includes("Kidney Disease")) {
-    riskAlerts.push(
-      { food: "High-Potassium Foods", disease: "Kidney Disease", severity: "high", message: "Limit bananas, oranges, and potatoes. Monitor potassium levels." }
-    );
-  }
+  const allMeals = [...breakfast, ...lunch, ...snacks, ...dinner];
+  const totalCalories = allMeals.reduce((s, m) => s + m.calories, 0);
+  const totalProtein = allMeals.reduce((s, m) => s + m.protein, 0);
+  const totalFat = allMeals.reduce((s, m) => s + m.fat, 0);
+  const totalCarbs = allMeals.reduce((s, m) => s + m.carbs, 0);
 
-  const totalCalories = [...breakfast, ...lunch, ...snacks, ...dinner].reduce((sum, m) => sum + m.calories, 0);
-
-  return { breakfast, lunch, snacks, dinner, totalCalories, riskAlerts };
+  return {
+    breakfast, lunch, snacks, dinner,
+    totalCalories, totalProtein, totalFat, totalCarbs,
+    goalCalories: 2000,
+    riskAlerts,
+  };
 }
 
 export const chatbotResponses: Record<string, string> = {
-  "hello": "Hello! I'm your SmartPlate AI assistant. How can I help you with your diet today?",
+  "hello": "Hello! I'm your SmartPlate AI assistant. How can I help you with your diet today? 😊",
   "help": "I can help you with:\n• Understanding your meal plan\n• Food substitutions\n• Nutritional advice\n• Managing diet with health conditions\n\nJust ask me anything!",
   "calories": "Your daily caloric needs depend on age, weight, activity level, and health goals. Based on your profile, I've optimized your meal plan to match your needs.",
   "diabetes": "For diabetes management, focus on low-GI foods, increase fiber intake, and eat at regular intervals. Avoid white rice, sugary drinks, and processed foods.",
   "weight loss": "For healthy weight loss, maintain a caloric deficit of 300-500 cal/day. Focus on protein-rich meals, plenty of vegetables, and stay hydrated.",
-  "default": "That's a great question! Based on nutritional science, I'd recommend consulting your meal plan and making sure you're following the risk alerts. Would you like more specific advice?",
+  "default": "That's a great question! Based on nutritional science, I'd recommend consulting your meal plan and following the risk alerts. Want more specific advice?",
 };

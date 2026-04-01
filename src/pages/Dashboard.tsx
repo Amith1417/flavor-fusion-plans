@@ -1,34 +1,95 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Sun, Coffee, Moon, Cookie, Flame, TrendingUp, Droplets, Dumbbell, AlertTriangle } from "lucide-react";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { Flame, TrendingUp, Droplets, Dumbbell, AlertTriangle, ArrowRight, RefreshCw } from "lucide-react";
 import { type MealPlan, type MealItem, type UserProfile } from "@/data/mockData";
 import { useNavigate } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
-const mealSections = [
-  { key: "breakfast" as const, label: "Breakfast", icon: Coffee, time: "7:00 - 8:30 AM" },
-  { key: "lunch" as const, label: "Lunch", icon: Sun, time: "12:30 - 1:30 PM" },
-  { key: "snacks" as const, label: "Snacks", icon: Cookie, time: "4:00 - 5:00 PM" },
-  { key: "dinner" as const, label: "Dinner", icon: Moon, time: "7:30 - 8:30 PM" },
-];
+function CalorieDonut({ current, goal }: { current: number; goal: number }) {
+  const remaining = Math.max(goal - current, 0);
+  const data = [
+    { name: "Consumed", value: current },
+    { name: "Remaining", value: remaining },
+  ];
+  const COLORS = ["hsl(155, 45%, 52%)", "hsl(150, 18%, 88%)"];
 
-function MealCard({ item, index }: { item: MealItem; index: number }) {
+  return (
+    <div className="relative w-48 h-48 mx-auto">
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+            startAngle={90}
+            endAngle={-270}
+            paddingAngle={3}
+            dataKey="value"
+            stroke="none"
+          >
+            {data.map((_, i) => (
+              <Cell key={i} fill={COLORS[i]} />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-3xl font-display font-extrabold text-foreground">{current.toLocaleString()}</span>
+        <span className="text-xs text-muted-foreground font-medium">/ {goal.toLocaleString()} kcal</span>
+        <span className="text-[10px] text-primary font-bold mt-0.5">Daily Goal</span>
+      </div>
+    </div>
+  );
+}
+
+function MacroBadge({ label, value, unit, color }: { label: string; value: number; unit: string; color: string }) {
+  return (
+    <div className="text-center">
+      <div className={`h-10 w-10 rounded-full border-2 mx-auto mb-1 flex items-center justify-center text-xs font-bold`} style={{ borderColor: color, color }}>
+        {value}{unit}
+      </div>
+      <span className="text-[10px] text-muted-foreground font-medium">{label}</span>
+    </div>
+  );
+}
+
+function MealCard({ item, onSwap }: { item: MealItem; onSwap?: () => void }) {
   return (
     <motion.div
-      className="glass-card-hover p-4 flex items-start justify-between gap-3"
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.1 }}
+      className="soft-card-hover p-4 flex gap-4 items-center"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
     >
-      <div className="flex-1">
-        <h4 className="font-medium text-sm mb-1">{item.name}</h4>
-        <p className="text-xs text-muted-foreground">{item.benefits}</p>
+      <img
+        src={item.image}
+        alt={item.name}
+        loading="lazy"
+        width={64}
+        height={64}
+        className="h-16 w-16 rounded-2xl object-cover flex-shrink-0"
+      />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <h4 className="font-bold text-sm text-foreground">{item.name}</h4>
+            <p className="text-xs text-muted-foreground">{item.mealTime}</p>
+          </div>
+          {onSwap && (
+            <button onClick={onSwap} className="text-primary text-xs font-bold flex items-center gap-1 hover:underline whitespace-nowrap">
+              <RefreshCw className="h-3 w-3" />
+              Swap
+            </button>
+          )}
+        </div>
+        <div className="flex items-center gap-1 mt-1.5">
+          <span className="text-primary text-[10px] font-bold">Why this works:</span>
+          <span className="text-[10px] text-muted-foreground truncate">{item.benefits}</span>
+        </div>
       </div>
-      <Badge variant="secondary" className="text-xs shrink-0">
-        {item.calories} cal
-      </Badge>
     </motion.div>
   );
 }
@@ -48,98 +109,115 @@ export default function Dashboard() {
   if (!plan) {
     return (
       <div className="min-h-[calc(100vh-3.5rem)] flex items-center justify-center px-6">
-        <div className="glass-card p-10 text-center max-w-md">
+        <div className="soft-card p-10 text-center max-w-md">
           <Flame className="h-12 w-12 text-primary mx-auto mb-4" />
-          <h2 className="text-xl font-display font-bold mb-2">No Diet Plan Yet</h2>
-          <p className="text-muted-foreground mb-6 text-sm">
-            Generate your personalized AI diet plan first
-          </p>
-          <Button
-            onClick={() => navigate("/planner")}
-            className="btn-glow bg-primary text-primary-foreground hover:bg-primary/90 font-display"
-          >
+          <h2 className="text-xl font-display font-extrabold mb-2">No Diet Plan Yet</h2>
+          <p className="text-muted-foreground mb-6 text-sm">Generate your personalized AI diet plan first</p>
+          <Button onClick={() => navigate("/planner")} className="coral-btn px-8 h-12 text-base shadow-lg">
             Go to Planner
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-[calc(100vh-3.5rem)] px-6 py-10 max-w-6xl mx-auto">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-display font-bold mb-2">
-          Your <span className="gradient-text">Diet Plan</span>
-        </h1>
-        <p className="text-muted-foreground mb-8">
-          Personalized for {profile?.preference} diet
-          {profile?.diseases.length ? ` · Managing ${profile.diseases.join(", ")}` : ""}
-        </p>
+  const allMeals = [...plan.breakfast, ...plan.lunch, ...plan.snacks, ...plan.dinner];
 
-        {/* Stats */}
-        <div className="grid sm:grid-cols-4 gap-4 mb-8">
-          {[
-            { label: "Total Calories", value: `${plan.totalCalories}`, icon: Flame, unit: "kcal" },
-            { label: "Water Intake", value: "3.2", icon: Droplets, unit: "liters" },
-            { label: "Protein Target", value: "68", icon: Dumbbell, unit: "grams" },
-            { label: "Risk Alerts", value: `${plan.riskAlerts.length}`, icon: AlertTriangle, unit: "items" },
-          ].map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              className="glass-card p-5"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <stat.icon className="h-4 w-4 text-primary" />
-                </div>
-                <span className="text-xs text-muted-foreground">{stat.label}</span>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-display font-bold">{stat.value}</span>
-                <span className="text-xs text-muted-foreground">{stat.unit}</span>
-              </div>
-            </motion.div>
-          ))}
+  return (
+    <div className="min-h-[calc(100vh-3.5rem)] px-6 py-8 max-w-5xl mx-auto">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        {/* Greeting */}
+        <div className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold">
+            Hi {profile?.name || "Alex"}! 👋
+          </h1>
+          <p className="text-lg font-display font-bold text-muted-foreground">Good Morning.</p>
         </div>
 
-        {/* Meal Sections */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-8">
-          {mealSections.map((section, si) => (
-            <motion.div
-              key={section.key}
-              className="glass-card p-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + si * 0.1 }}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <section.icon className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold">{section.label}</h3>
-                  <span className="text-xs text-muted-foreground">{section.time}</span>
-                </div>
+        <div className="grid lg:grid-cols-5 gap-6">
+          {/* Left column */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Donut card */}
+            <div className="soft-card p-6">
+              <h3 className="font-display font-extrabold mb-4 text-center">Daily SmartPlate</h3>
+              <CalorieDonut current={plan.totalCalories} goal={plan.goalCalories} />
+              <div className="flex justify-center gap-6 mt-4">
+                <MacroBadge label="Protein" value={plan.totalProtein} unit="g" color="hsl(155, 45%, 52%)" />
+                <MacroBadge label="Fat" value={plan.totalFat} unit="g" color="hsl(38, 92%, 50%)" />
+                <MacroBadge label="Carbs" value={plan.totalCarbs} unit="g" color="hsl(12, 80%, 62%)" />
               </div>
+            </div>
+
+            {/* Quick stats */}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: "Water", value: "3.2L", icon: Droplets, color: "text-blue-500" },
+                { label: "Alerts", value: `${plan.riskAlerts.length}`, icon: AlertTriangle, color: "text-warning" },
+              ].map((s) => (
+                <div key={s.label} className="soft-card p-4 flex items-center gap-3">
+                  <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <s.icon className={`h-4 w-4 ${s.color}`} />
+                  </div>
+                  <div>
+                    <span className="text-xs text-muted-foreground font-medium">{s.label}</span>
+                    <p className="font-display font-extrabold">{s.value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right column - Meals */}
+          <div className="lg:col-span-3 space-y-6">
+            <div className="soft-card p-6">
+              <h3 className="font-display font-extrabold mb-4">Today's Meals</h3>
               <div className="space-y-3">
-                {plan[section.key].map((item, i) => (
-                  <MealCard key={item.name} item={item} index={i} />
+                {allMeals.map((meal) => (
+                  <MealCard key={meal.name} item={meal} onSwap={() => {}} />
                 ))}
               </div>
-            </motion.div>
-          ))}
+            </div>
+
+            {/* Risk alerts inline */}
+            {plan.riskAlerts.length > 0 && (
+              <div className="soft-card p-6 border-l-4 border-warning">
+                <h3 className="font-display font-extrabold mb-3 flex items-center gap-2 text-sm">
+                  <AlertTriangle className="h-4 w-4 text-warning" />
+                  Risk Alerts
+                </h3>
+                <div className="space-y-2">
+                  {plan.riskAlerts.slice(0, 3).map((alert, i) => (
+                    <div key={i} className="flex items-start gap-2 text-xs">
+                      <span className={`mt-0.5 h-1.5 w-1.5 rounded-full flex-shrink-0 ${
+                        alert.severity === "high" ? "bg-destructive" : "bg-warning"
+                      }`} />
+                      <span className="text-muted-foreground">
+                        <strong className="text-foreground">{alert.food}</strong>: {alert.message}
+                      </span>
+                    </div>
+                  ))}
+                  {plan.riskAlerts.length > 3 && (
+                    <button
+                      onClick={() => navigate("/alerts")}
+                      className="text-primary text-xs font-bold hover:underline"
+                    >
+                      View all {plan.riskAlerts.length} alerts →
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Progress Tracking (Static) */}
-        <div className="glass-card p-6">
-          <h3 className="font-display font-semibold mb-6 flex items-center gap-2">
+        {/* Progress section */}
+        <div className="soft-card p-6 mt-6">
+          <h3 className="font-display font-extrabold mb-5 flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-primary" />
             Weekly Progress
           </h3>
-          <div className="space-y-4">
+          <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
             {[
               { label: "Calorie Goal", value: 78 },
               { label: "Hydration", value: 65 },
@@ -148,10 +226,10 @@ export default function Dashboard() {
             ].map((item) => (
               <div key={item.label} className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">{item.label}</span>
-                  <span className="font-display font-semibold">{item.value}%</span>
+                  <span className="text-muted-foreground font-medium">{item.label}</span>
+                  <span className="font-display font-extrabold text-primary">{item.value}%</span>
                 </div>
-                <Progress value={item.value} className="h-2 bg-secondary" />
+                <Progress value={item.value} className="h-2.5 bg-secondary rounded-full" />
               </div>
             ))}
           </div>
