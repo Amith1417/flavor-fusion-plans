@@ -15,7 +15,7 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: isSignup ? "Account Created!" : "Welcome Back!",
+      title: isSignup ? "Account Created! 🎉" : "Welcome Back! 👋",
       description: isSignup
         ? "Your SmartPlate AI account is ready."
         : "You've been successfully logged in.",
@@ -25,22 +25,19 @@ export default function Login() {
 
   return (
     <div className="min-h-[calc(100vh-3.5rem)] flex items-center justify-center px-6 py-12">
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px] pointer-events-none" />
-
       <motion.div
-        className="glass-card w-full max-w-md p-8 relative z-10"
+        className="soft-card w-full max-w-md p-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center">
+          <div className="h-11 w-11 rounded-2xl gradient-mint flex items-center justify-center">
             <UtensilsCrossed className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="font-display font-bold text-xl">SmartPlate AI</span>
         </div>
 
-        <h2 className="text-2xl font-display font-bold text-center mb-2">
+        <h2 className="text-2xl font-display font-extrabold text-center mb-1">
           {isSignup ? "Create Account" : "Welcome Back"}
         </h2>
         <p className="text-sm text-muted-foreground text-center mb-8">
@@ -50,31 +47,31 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {isSignup && (
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-sm text-muted-foreground">Full Name</Label>
+              <Label htmlFor="name" className="text-sm font-semibold text-muted-foreground">Full Name</Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="name" placeholder="John Doe" className="pl-10 bg-secondary border-border" />
+                <Input id="name" placeholder="Alex Johnson" className="pl-10 bg-secondary/50 border-border rounded-xl h-11" />
               </div>
             </div>
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm text-muted-foreground">Email</Label>
+            <Label htmlFor="email" className="text-sm font-semibold text-muted-foreground">Email</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input id="email" type="email" placeholder="you@example.com" className="pl-10 bg-secondary border-border" />
+              <Input id="email" type="email" placeholder="you@example.com" className="pl-10 bg-secondary/50 border-border rounded-xl h-11" />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm text-muted-foreground">Password</Label>
+            <Label htmlFor="password" className="text-sm font-semibold text-muted-foreground">Password</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input id="password" type="password" placeholder="••••••••" className="pl-10 bg-secondary border-border" />
+              <Input id="password" type="password" placeholder="••••••••" className="pl-10 bg-secondary/50 border-border rounded-xl h-11" />
             </div>
           </div>
 
-          <Button type="submit" className="w-full btn-glow bg-primary text-primary-foreground hover:bg-primary/90 font-display">
+          <Button type="submit" className="w-full coral-btn h-12 text-base shadow-lg mt-2">
             {isSignup ? "Create Account" : "Sign In"}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
@@ -84,7 +81,7 @@ export default function Login() {
           {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
           <button
             onClick={() => setIsSignup(!isSignup)}
-            className="text-primary hover:underline font-medium"
+            className="text-primary hover:underline font-bold"
           >
             {isSignup ? "Sign In" : "Sign Up"}
           </button>
