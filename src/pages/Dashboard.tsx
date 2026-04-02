@@ -58,11 +58,15 @@ function MacroBadge({ label, value, unit, color }: { label: string; value: numbe
 }
 
 function MealCard({ item, onSwap }: { item: MealItem; onSwap?: () => void }) {
+  const navigate = useNavigate();
+  const slug = item.name.toLowerCase().replace(/\s+/g, "-");
+
   return (
     <motion.div
-      className="soft-card-hover p-4 flex gap-4 items-center"
+      className="soft-card-hover p-4 flex gap-4 items-center cursor-pointer"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
+      onClick={() => navigate(`/meal/${slug}`)}
     >
       <img
         src={item.image}
