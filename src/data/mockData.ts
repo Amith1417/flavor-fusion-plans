@@ -5,11 +5,46 @@ import chickenBroccoli from "@/assets/chicken-broccoli.jpg";
 import mixedNuts from "@/assets/mixed-nuts.jpg";
 
 export const diseases = [
-  "Diabetes", "Hypertension", "PCOS", "Thyroid", "Heart Disease",
-  "Kidney Disease", "Obesity", "Anemia", "Cholesterol", "IBS", "Celiac Disease"
+  "Diabetes", "Hypertension", "PCOS", "IBS",
+  "Thyroid", "Heart Disease", "Kidney Disease",
+  "Obesity", "Anemia", "Cholesterol", "Celiac Disease"
 ];
 
-export const dietaryPreferences = ["Vegetarian", "Non-Vegetarian", "Vegan"];
+export const diseaseIcons: Record<string, string> = {
+  "Diabetes": "💉",
+  "Hypertension": "❤️‍🩹",
+  "PCOS": "🩺",
+  "IBS": "🫄",
+  "Thyroid": "🦋",
+  "Heart Disease": "❤️",
+  "Kidney Disease": "🫘",
+  "Obesity": "⚖️",
+  "Anemia": "🩸",
+  "Cholesterol": "🧬",
+  "Celiac Disease": "🌾",
+};
+
+export const dietaryPreferences = [
+  "Vegetarian", "Non-Vegetarian", "Vegan", "Jain", "Keto", "Mediterranean"
+];
+
+export const dietIcons: Record<string, string> = {
+  "Vegetarian": "🥬",
+  "Non-Vegetarian": "🍗",
+  "Vegan": "🌱",
+  "Jain": "🙏",
+  "Keto": "🥑",
+  "Mediterranean": "🫒",
+};
+
+export const dietDescriptions: Record<string, string> = {
+  "Vegetarian": "Plant-based with dairy & eggs",
+  "Non-Vegetarian": "Includes meat, fish & poultry",
+  "Vegan": "100% plant-based, no animal products",
+  "Jain": "No root vegetables, sattvic diet",
+  "Keto": "High fat, very low carb",
+  "Mediterranean": "Heart-healthy, olive oil based",
+};
 
 export interface MealItem {
   name: string;
@@ -52,70 +87,103 @@ export interface UserProfile {
   preference: string;
 }
 
+const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; snacks: MealItem[]; dinner: MealItem[] }> = {
+  Vegetarian: {
+    breakfast: [
+      { name: "Avocado Toast", calories: 280, protein: 12, fat: 15, carbs: 28, benefits: "Low Glycemic for blood sugar control", image: avocadoToast, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Quinoa Buddha Bowl", calories: 350, protein: 18, fat: 12, carbs: 42, benefits: "Complete protein with all amino acids", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Mixed Nuts & Seeds", calories: 170, protein: 6, fat: 14, carbs: 8, benefits: "Healthy fats for heart health", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Berry Smoothie Bowl", calories: 200, protein: 8, fat: 4, carbs: 36, benefits: "Rich in antioxidants & vitamins", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Palak Paneer & Roti", calories: 400, protein: 22, fat: 18, carbs: 38, benefits: "Iron-rich spinach with protein", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+  "Non-Vegetarian": {
+    breakfast: [
+      { name: "Egg White Omelette", calories: 250, protein: 22, fat: 10, carbs: 12, benefits: "High protein, low calorie start", image: avocadoToast, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Grilled Salmon Salad", calories: 380, protein: 32, fat: 18, carbs: 20, benefits: "Omega-3 rich for heart & brain", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Mixed Nuts & Seeds", calories: 170, protein: 6, fat: 14, carbs: 8, benefits: "Healthy fats for heart health", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Greek Yogurt Parfait", calories: 190, protein: 14, fat: 5, carbs: 28, benefits: "Probiotics for gut health", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Grilled Chicken & Broccoli", calories: 400, protein: 35, fat: 16, carbs: 22, benefits: "High protein for muscle recovery", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+  Vegan: {
+    breakfast: [
+      { name: "Chia Seed Pudding", calories: 240, protein: 8, fat: 12, carbs: 28, benefits: "Omega-3 & fiber rich", image: smoothieBowl, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Lentil & Kale Stew", calories: 320, protein: 20, fat: 8, carbs: 44, benefits: "Iron & protein from legumes", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Hummus & Veggie Sticks", calories: 160, protein: 7, fat: 9, carbs: 16, benefits: "Plant protein with fiber", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Acai Bowl", calories: 210, protein: 5, fat: 6, carbs: 38, benefits: "Superfood antioxidants", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Tofu Stir-Fry with Quinoa", calories: 380, protein: 24, fat: 14, carbs: 40, benefits: "Complete plant-based protein", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+  Jain: {
+    breakfast: [
+      { name: "Sabudana Khichdi", calories: 290, protein: 6, fat: 12, carbs: 42, benefits: "Easy to digest, energy boost", image: avocadoToast, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Moong Dal Cheela", calories: 280, protein: 16, fat: 8, carbs: 36, benefits: "Protein-rich without root veggies", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Dry Fruit Ladoo", calories: 180, protein: 5, fat: 10, carbs: 22, benefits: "Natural energy from dry fruits", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Fresh Fruit Bowl", calories: 150, protein: 2, fat: 1, carbs: 38, benefits: "Vitamins & natural sugars", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Paneer Tikka (No Onion/Garlic)", calories: 350, protein: 20, fat: 22, carbs: 18, benefits: "Sattvic protein source", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+  Keto: {
+    breakfast: [
+      { name: "Bulletproof Coffee & Eggs", calories: 420, protein: 18, fat: 38, carbs: 3, benefits: "Sustained energy from healthy fats", image: avocadoToast, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Avocado Chicken Salad", calories: 450, protein: 30, fat: 34, carbs: 8, benefits: "High fat, minimal carbs for ketosis", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Cheese & Almond Plate", calories: 220, protein: 12, fat: 18, carbs: 4, benefits: "Keto-friendly fats & protein", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Coconut Fat Bombs", calories: 180, protein: 2, fat: 18, carbs: 2, benefits: "MCTs for brain fuel", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Salmon with Cauliflower Mash", calories: 480, protein: 35, fat: 32, carbs: 10, benefits: "Omega-3 with low-carb sides", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+  Mediterranean: {
+    breakfast: [
+      { name: "Greek Yogurt with Honey & Walnuts", calories: 300, protein: 15, fat: 14, carbs: 32, benefits: "Probiotics & healthy fats", image: avocadoToast, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Mediterranean Grain Bowl", calories: 380, protein: 16, fat: 18, carbs: 42, benefits: "Heart-healthy olive oil & grains", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Olives & Feta Plate", calories: 160, protein: 6, fat: 14, carbs: 4, benefits: "Monounsaturated fats", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Hummus & Pita", calories: 200, protein: 8, fat: 8, carbs: 26, benefits: "Chickpea protein & fiber", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Baked Sea Bass with Vegetables", calories: 360, protein: 30, fat: 16, carbs: 24, benefits: "Lean protein with Mediterranean herbs", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+};
+
 export function generateMealPlan(profile: UserProfile): MealPlan {
-  const isVeg = profile.preference === "Vegetarian" || profile.preference === "Vegan";
+  const diet = mealsByDiet[profile.preference] || mealsByDiet["Vegetarian"];
 
-  const breakfast: MealItem[] = [
-    {
-      name: "Avocado Toast",
-      calories: 280,
-      protein: 12,
-      fat: 15,
-      carbs: 28,
-      benefits: "Low Glycemic for blood sugar control",
-      image: avocadoToast,
-      mealTime: "Breakfast · 7am",
-    },
-  ];
-
-  const lunch: MealItem[] = [
-    {
-      name: isVeg ? "Quinoa Buddha Bowl" : "Salmon Salad",
-      calories: 350,
-      protein: 25,
-      fat: 15,
-      carbs: 30,
-      benefits: "Low Glycemic for blood pressure",
-      image: salmonSalad,
-      mealTime: "Lunch · 1pm",
-    },
-  ];
-
-  const snacks: MealItem[] = [
-    {
-      name: "Mixed Nuts & Seeds",
-      calories: 170,
-      protein: 6,
-      fat: 14,
-      carbs: 8,
-      benefits: "Healthy fats for heart health",
-      image: mixedNuts,
-      mealTime: "Snack · 4pm",
-    },
-    {
-      name: "Berry Smoothie Bowl",
-      calories: 200,
-      protein: 8,
-      fat: 4,
-      carbs: 36,
-      benefits: "Rich in antioxidants & vitamins",
-      image: smoothieBowl,
-      mealTime: "Snack · 11am",
-    },
-  ];
-
-  const dinner: MealItem[] = [
-    {
-      name: isVeg ? "Palak Paneer & Roti" : "Grilled Chicken & Broccoli",
-      calories: 400,
-      protein: 30,
-      fat: 18,
-      carbs: 32,
-      benefits: "High protein for muscle recovery",
-      image: chickenBroccoli,
-      mealTime: "Dinner · 7pm",
-    },
-  ];
+  const { breakfast, lunch, snacks, dinner } = diet;
 
   const riskAlerts: RiskAlert[] = [];
 
@@ -143,6 +211,24 @@ export function generateMealPlan(profile: UserProfile): MealPlan {
       { food: "Fried Foods", disease: "Cholesterol", severity: "high", message: "Avoid deep-fried foods. Use air-frying or baking." }
     );
   }
+  if (profile.diseases.includes("IBS")) {
+    riskAlerts.push(
+      { food: "Spicy Foods", disease: "IBS", severity: "high", message: "Can trigger flare-ups. Use mild seasoning." },
+      { food: "Carbonated Drinks", disease: "IBS", severity: "medium", message: "May cause bloating. Choose still water." }
+    );
+  }
+  if (profile.diseases.includes("Celiac Disease")) {
+    riskAlerts.push(
+      { food: "Wheat & Gluten", disease: "Celiac Disease", severity: "high", message: "Strictly avoid all gluten-containing grains." },
+      { food: "Beer & Malt", disease: "Celiac Disease", severity: "high", message: "Contains gluten. Choose gluten-free alternatives." }
+    );
+  }
+  if (profile.diseases.includes("Thyroid")) {
+    riskAlerts.push(
+      { food: "Raw Cruciferous Veggies", disease: "Thyroid", severity: "medium", message: "Goitrogens may affect thyroid. Cook them well." },
+      { food: "Soy Products", disease: "Thyroid", severity: "medium", message: "May interfere with thyroid medication absorption." }
+    );
+  }
 
   const allMeals = [...breakfast, ...lunch, ...snacks, ...dinner];
   const totalCalories = allMeals.reduce((s, m) => s + m.calories, 0);
@@ -164,5 +250,7 @@ export const chatbotResponses: Record<string, string> = {
   "calories": "Your daily caloric needs depend on age, weight, activity level, and health goals. Based on your profile, I've optimized your meal plan to match your needs.",
   "diabetes": "For diabetes management, focus on low-GI foods, increase fiber intake, and eat at regular intervals. Avoid white rice, sugary drinks, and processed foods.",
   "weight loss": "For healthy weight loss, maintain a caloric deficit of 300-500 cal/day. Focus on protein-rich meals, plenty of vegetables, and stay hydrated.",
+  "keto": "The keto diet focuses on high fat, moderate protein, and very low carbs (under 50g/day). It helps your body enter ketosis for fat burning.",
+  "jain": "Jain diet excludes root vegetables, onions, garlic, and emphasizes sattvic (pure) foods. Focus on above-ground vegetables, legumes, and grains.",
   "default": "That's a great question! Based on nutritional science, I'd recommend consulting your meal plan and following the risk alerts. Want more specific advice?",
 };
