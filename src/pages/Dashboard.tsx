@@ -6,6 +6,8 @@ import { type MealPlan, type MealItem, type UserProfile } from "@/data/mockData"
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { StreakCard } from "@/components/StreakCard";
+import { ReportGenerator } from "@/components/ReportGenerator";
 
 function CalorieDonut({ current, goal }: { current: number; goal: number }) {
   const remaining = Math.max(goal - current, 0);
@@ -153,6 +155,9 @@ export default function Dashboard() {
               </div>
             </div>
 
+            {/* Streak */}
+            <StreakCard />
+
             {/* Quick stats */}
             <div className="grid grid-cols-2 gap-3">
               {[
@@ -170,6 +175,9 @@ export default function Dashboard() {
                 </div>
               ))}
             </div>
+
+            {/* Report download */}
+            <ReportGenerator plan={plan} profile={profile} />
           </div>
 
           {/* Right column - Meals */}
