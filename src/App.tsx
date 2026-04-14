@@ -14,6 +14,8 @@ import Alerts from "./pages/Alerts";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
 import MealDetail from "./pages/MealDetail";
+import Exercises from "./pages/Exercises";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,8 +31,10 @@ function AnimatedRoutes() {
         <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
         <Route path="/meal/:mealName" element={<PageTransition><MealDetail /></PageTransition>} />
         <Route path="/alerts" element={<PageTransition><Alerts /></PageTransition>} />
+        <Route path="/exercises" element={<PageTransition><Exercises /></PageTransition>} />
         <Route path="/chat" element={<PageTransition><Chat /></PageTransition>} />
         <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
+        <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
