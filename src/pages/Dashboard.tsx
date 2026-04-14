@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { StreakCard } from "@/components/StreakCard";
 import { ReportGenerator } from "@/components/ReportGenerator";
+import { StepCounter } from "@/components/StepCounter";
 
 function CalorieDonut({ current, goal }: { current: number; goal: number }) {
   const remaining = Math.max(goal - current, 0);
@@ -178,6 +179,9 @@ export default function Dashboard() {
 
             {/* Report download */}
             <ReportGenerator plan={plan} profile={profile} />
+
+            {/* Step Counter */}
+            <StepCounter />
           </div>
 
           {/* Right column - Meals */}
