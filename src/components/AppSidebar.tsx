@@ -1,4 +1,4 @@
-import { Home, UtensilsCrossed, LayoutDashboard, MessageCircle, Shield, User, LogIn } from "lucide-react";
+import { Home, UtensilsCrossed, LayoutDashboard, MessageCircle, Shield, User, LogIn, Dumbbell, ShieldCheck } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -19,12 +19,14 @@ const mainItems = [
   { title: "Home", url: "/", icon: Home },
   { title: "Meal Plan", url: "/planner", icon: UtensilsCrossed },
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Exercises", url: "/exercises", icon: Dumbbell },
   { title: "Alerts", url: "/alerts", icon: Shield },
   { title: "AI Chat", url: "/chat", icon: MessageCircle },
 ];
 
 const accountItems = [
   { title: "Profile", url: "/profile", icon: User },
+  { title: "Admin", url: "/admin", icon: ShieldCheck },
   { title: "Login", url: "/login", icon: LogIn },
 ];
 
