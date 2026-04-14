@@ -1,11 +1,11 @@
-import { Home, UtensilsCrossed, Search, User, Moon, Sun } from "lucide-react";
+import { Home, UtensilsCrossed, Dumbbell, User, Moon, Sun } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const tabs = [
   { label: "Home", icon: Home, path: "/" },
-  { label: "Meal Plan", icon: UtensilsCrossed, path: "/planner" },
-  { label: "Explore", icon: Search, path: "/dashboard" },
+  { label: "Plan", icon: UtensilsCrossed, path: "/planner" },
+  { label: "Exercise", icon: Dumbbell, path: "/exercises" },
   { label: "Profile", icon: User, path: "/profile" },
 ];
 
