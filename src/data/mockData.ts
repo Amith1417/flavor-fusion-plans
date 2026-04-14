@@ -25,7 +25,7 @@ export const diseaseIcons: Record<string, string> = {
 };
 
 export const dietaryPreferences = [
-  "Vegetarian", "Non-Vegetarian", "Vegan", "Jain", "Keto", "Mediterranean"
+  "Vegetarian", "Non-Vegetarian", "Vegan", "Jain", "Keto", "Mediterranean", "Paleo", "DASH", "Whole30"
 ];
 
 export const dietIcons: Record<string, string> = {
@@ -35,6 +35,9 @@ export const dietIcons: Record<string, string> = {
   "Jain": "🙏",
   "Keto": "🥑",
   "Mediterranean": "🫒",
+  "Paleo": "🦴",
+  "DASH": "💚",
+  "Whole30": "🔥",
 };
 
 export const dietDescriptions: Record<string, string> = {
@@ -44,6 +47,9 @@ export const dietDescriptions: Record<string, string> = {
   "Jain": "No root vegetables, sattvic diet",
   "Keto": "High fat, very low carb",
   "Mediterranean": "Heart-healthy, olive oil based",
+  "Paleo": "Whole foods, no grains or dairy",
+  "DASH": "Low sodium, heart-healthy eating",
+  "Whole30": "30-day reset, no sugar or grains",
 };
 
 export interface MealItem {
@@ -176,6 +182,51 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Baked Sea Bass with Vegetables", calories: 360, protein: 30, fat: 16, carbs: 24, benefits: "Lean protein with Mediterranean herbs", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+  Paleo: {
+    breakfast: [
+      { name: "Sweet Potato Hash & Eggs", calories: 380, protein: 22, fat: 18, carbs: 32, benefits: "Whole food energy with healthy fats", image: avocadoToast, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Grilled Chicken & Avocado Salad", calories: 420, protein: 35, fat: 24, carbs: 18, benefits: "Clean protein with anti-inflammatory fats", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Trail Mix (Nuts & Dried Fruit)", calories: 200, protein: 6, fat: 14, carbs: 16, benefits: "Paleo-friendly natural energy", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Coconut Chia Pudding", calories: 180, protein: 5, fat: 12, carbs: 14, benefits: "Healthy MCTs and fiber", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Herb-Crusted Lamb with Roasted Veggies", calories: 460, protein: 38, fat: 26, carbs: 20, benefits: "Iron-rich with antioxidant herbs", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+  DASH: {
+    breakfast: [
+      { name: "Oatmeal with Banana & Flaxseed", calories: 300, protein: 10, fat: 8, carbs: 48, benefits: "Low sodium, heart-friendly fiber", image: smoothieBowl, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Turkey & Veggie Wrap", calories: 350, protein: 28, fat: 10, carbs: 38, benefits: "Lean protein, low sodium", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Unsalted Almonds & Apple", calories: 180, protein: 6, fat: 12, carbs: 16, benefits: "Potassium-rich for blood pressure", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Low-Fat Yogurt with Berries", calories: 150, protein: 10, fat: 3, carbs: 24, benefits: "Calcium & probiotics", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Baked Cod with Steamed Broccoli", calories: 320, protein: 32, fat: 8, carbs: 26, benefits: "Omega-3s with low sodium prep", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+    ],
+  },
+  Whole30: {
+    breakfast: [
+      { name: "Veggie Frittata (No Dairy)", calories: 340, protein: 24, fat: 20, carbs: 14, benefits: "Clean protein, no processed ingredients", image: avocadoToast, mealTime: "Breakfast · 7am" },
+    ],
+    lunch: [
+      { name: "Grilled Shrimp & Zucchini Noodles", calories: 360, protein: 30, fat: 16, carbs: 22, benefits: "Grain-free, whole food nutrition", image: salmonSalad, mealTime: "Lunch · 1pm" },
+    ],
+    snacks: [
+      { name: "Cashew Butter & Celery", calories: 170, protein: 5, fat: 14, carbs: 8, benefits: "Whole30 compliant healthy fats", image: mixedNuts, mealTime: "Snack · 4pm" },
+      { name: "Mixed Berry Bowl", calories: 120, protein: 2, fat: 1, carbs: 28, benefits: "Natural sugars only, no additives", image: smoothieBowl, mealTime: "Snack · 11am" },
+    ],
+    dinner: [
+      { name: "Herb Roasted Chicken with Sweet Potato", calories: 440, protein: 36, fat: 18, carbs: 32, benefits: "Clean eating with complex carbs", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
     ],
   },
 };
