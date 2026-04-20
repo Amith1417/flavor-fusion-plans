@@ -1,29 +1,97 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Sparkles, Check, ChevronRight, ChevronLeft } from "lucide-react";
+import { Loader2, Sparkles, Check, ChevronRight, ChevronLeft, RotateCcw } from "lucide-react";
 import { diseases, diseaseIcons, dietaryPreferences, dietIcons, dietDescriptions, generateMealPlan, type UserProfile } from "@/data/mockData";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import healthAdvisor from "@/assets/health-advisor.png";
 import healthCouple from "@/assets/health-couple.png";
 
+const DRAFT_KEY = "plannerDraft";
+
+interface PlannerDraft {
+  step: number;
+  name: string;
+  age: string;
+  weight: string;
+  height: string;
+  selectedDiseases: string[];
+  preference: string;
+}
+
+const defaultDraft: PlannerDraft = {
+  step: 1,
+  name: "",
+  age: "",
+  weight: "",
+  height: "",
+  selectedDiseases: [],
+  preference: "Vegetarian",
+};
+
+function loadDraft(): PlannerDraft {
+  try {
+    const stored = sessionStorage.getItem(DRAFT_KEY);
+    if (stored) return { ...defaultDraft, ...JSON.parse(stored) };
+    // Fallback: hydrate from existing userProfile so "back to edit" works
+    const profile = sessionStorage.getItem("userProfile");
+    if (profile) {
+      const p = JSON.parse(profile) as UserProfile;
+      return {
+        step: 1,
+        name: p.name || "",
+        age: String(p.age ?? ""),
+        weight: String(p.weight ?? ""),
+        height: String(p.height ?? ""),
+        selectedDiseases: p.diseases || [],
+        preference: p.preference || "Vegetarian",
+      };
+    }
+  } catch {}
+  return defaultDraft;
+}
+
 export default function Planner() {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
-  const [selectedDiseases, setSelectedDiseases] = useState<string[]>([]);
-  const [preference, setPreference] = useState("Vegetarian");
+  const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+
+  const [draft, setDraft] = useState<PlannerDraft>(() => loadDraft());
   const [loading, setLoading] = useState(false);
 
+  const { step, name, age, weight, height, selectedDiseases, preference } = draft;
+  const update = (patch: Partial<PlannerDraft>) =>
+    setDraft((d) => ({ ...d, ...patch }));
+
+  // Pre-select diet from query (?diet=Keto)
+  useEffect(() => {
+    const dietParam = searchParams.get("diet");
+    if (dietParam && dietaryPreferences.includes(dietParam)) {
+      update({ preference: dietParam, step: Math.max(step, 3) });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  // Persist draft on every change
+  useEffect(() => {
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  }, [draft]);
+
   const toggleDisease = (d: string) => {
-    setSelectedDiseases((prev) =>
-      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]
-    );
+    update({
+      selectedDiseases: selectedDiseases.includes(d)
+        ? selectedDiseases.filter((x) => x !== d)
+        : [...selectedDiseases, d],
+    });
+  };
+
+  const handleReset = () => {
+    sessionStorage.removeItem(DRAFT_KEY);
+    setDraft(defaultDraft);
+    toast({ title: "Form reset", description: "Starting fresh." });
   };
 
   const handleGenerate = () => {
@@ -43,40 +111,53 @@ export default function Planner() {
       sessionStorage.setItem("mealPlan", JSON.stringify(plan));
       sessionStorage.setItem("userProfile", JSON.stringify(profile));
       navigate("/dashboard");
-    }, 2500);
+    }, 1800);
   };
 
   const totalSteps = 3;
+  const setStep = (s: number) => update({ step: s });
 
   return (
     <div className="min-h-[calc(100vh-3.5rem)] px-5 py-8 max-w-lg mx-auto">
       {/* Mobile Header */}
       <div className="flex items-center justify-between mb-6 md:hidden">
         {step > 1 ? (
-          <button onClick={() => setStep(step - 1)} className="p-1">
+          <button onClick={() => setStep(step - 1)} className="p-1" aria-label="Back">
             <ChevronLeft className="h-5 w-5 text-foreground" />
           </button>
         ) : (
           <div className="w-7" />
         )}
         <h2 className="text-base font-bold font-display">
-          {step === 1 ? "Health Profile" : step === 2 ? "Health Profile" : "Diet Preference"}
+          {step === 1 ? "Personal Info" : step === 2 ? "Health Profile" : "Diet Preference"}
         </h2>
-        <div className="w-7" />
+        <button onClick={handleReset} className="p-1" aria-label="Reset">
+          <RotateCcw className="h-4 w-4 text-muted-foreground" />
+        </button>
       </div>
 
-      {/* Progress */}
+      {/* Progress + step navigation */}
       <div className="mb-6">
-        <p className="text-xs font-bold text-muted-foreground mb-2 text-center">
-          Step {step} of {totalSteps}: {step === 1 ? "Personal Info" : step === 2 ? "Health Conditions" : "Preferences"}
-        </p>
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-xs font-bold text-muted-foreground">
+            Step {step} of {totalSteps}
+          </p>
+          <button
+            onClick={handleReset}
+            className="hidden md:flex items-center gap-1 text-[11px] font-bold text-muted-foreground hover:text-primary"
+          >
+            <RotateCcw className="h-3 w-3" /> Reset
+          </button>
+        </div>
         <div className="flex gap-2">
           {Array.from({ length: totalSteps }).map((_, i) => (
-            <div
+            <button
               key={i}
+              onClick={() => setStep(i + 1)}
               className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
-                i < step ? "bg-primary" : "bg-border"
+                i < step ? "bg-primary" : "bg-border hover:bg-primary/40"
               }`}
+              aria-label={`Go to step ${i + 1}`}
             />
           ))}
         </div>
@@ -96,22 +177,22 @@ export default function Planner() {
                 <Input
                   placeholder="Alex"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => update({ name: e.target.value })}
                   className="bg-secondary/50 border-border rounded-xl h-11"
                 />
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-muted-foreground">Age</Label>
-                  <Input type="number" placeholder="25" value={age} onChange={(e) => setAge(e.target.value)} className="bg-secondary/50 border-border rounded-xl h-11" />
+                  <Input type="number" placeholder="25" value={age} onChange={(e) => update({ age: e.target.value })} className="bg-secondary/50 border-border rounded-xl h-11" />
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-muted-foreground">Weight (kg)</Label>
-                  <Input type="number" placeholder="70" value={weight} onChange={(e) => setWeight(e.target.value)} className="bg-secondary/50 border-border rounded-xl h-11" />
+                  <Input type="number" placeholder="70" value={weight} onChange={(e) => update({ weight: e.target.value })} className="bg-secondary/50 border-border rounded-xl h-11" />
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-muted-foreground">Height (cm)</Label>
-                  <Input type="number" placeholder="170" value={height} onChange={(e) => setHeight(e.target.value)} className="bg-secondary/50 border-border rounded-xl h-11" />
+                  <Input type="number" placeholder="170" value={height} onChange={(e) => update({ height: e.target.value })} className="bg-secondary/50 border-border rounded-xl h-11" />
                 </div>
               </div>
 
@@ -130,7 +211,7 @@ export default function Planner() {
                   Select Your<br />Conditions
                 </h1>
                 <p className="text-muted-foreground text-sm mb-6">
-                  Choose your conditions to select<br />your health profile.
+                  Choose your conditions to personalize<br />your health profile.
                 </p>
               </div>
               <img src={healthAdvisor} alt="" className="w-20 h-20 md:w-24 md:h-24 object-contain -mt-2" loading="lazy" width={512} height={512} />
@@ -155,9 +236,14 @@ export default function Planner() {
                 ))}
               </div>
 
-              <Button onClick={() => setStep(3)} className="w-full coral-btn h-12 text-base shadow-lg">
-                Continue <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
+              <div className="flex gap-3">
+                <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-12 rounded-2xl font-bold text-base border-border">
+                  Back
+                </Button>
+                <Button onClick={() => setStep(3)} className="flex-1 coral-btn h-12 text-base shadow-lg">
+                  Continue <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
             </div>
 
             <div className="flex justify-end mt-4">
@@ -171,14 +257,19 @@ export default function Planner() {
             <h1 className="text-2xl md:text-3xl font-display font-extrabold mb-1">
               Dietary Preference
             </h1>
-            <p className="text-muted-foreground text-sm mb-6">Choose your diet style</p>
+            <p className="text-muted-foreground text-sm mb-6">
+              Choose your diet style.{" "}
+              <button onClick={() => navigate("/diets")} className="text-primary font-bold hover:underline">
+                Browse all plans →
+              </button>
+            </p>
 
             <div className="soft-card p-5 space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 {dietaryPreferences.map((p) => (
                   <button
                     key={p}
-                    onClick={() => setPreference(p)}
+                    onClick={() => update({ preference: p })}
                     className={`px-4 py-4 rounded-2xl text-left font-bold transition-all duration-200 border-2 ${
                       preference === p
                         ? "bg-primary/10 border-primary text-primary scale-[1.02]"
