@@ -66,6 +66,14 @@ export default function Landing() {
               size="lg"
               variant="outline"
               className="border-primary/30 text-primary hover:bg-primary/5 font-bold text-base px-8 h-12 rounded-2xl"
+              onClick={() => navigate("/diets")}
+            >
+              Browse Diets
+            </Button>
+            <Button
+              size="lg"
+              variant="ghost"
+              className="text-muted-foreground hover:text-primary font-bold text-base px-8 h-12 rounded-2xl"
               onClick={() => navigate("/login")}
             >
               Sign In
