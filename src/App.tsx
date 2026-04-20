@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Planner from "./pages/Planner";
+import Diets from "./pages/Diets";
 import Dashboard from "./pages/Dashboard";
 import Alerts from "./pages/Alerts";
 import Chat from "./pages/Chat";
@@ -28,6 +29,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<PageTransition><Landing /></PageTransition>} />
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/planner" element={<PageTransition><Planner /></PageTransition>} />
+        <Route path="/diets" element={<PageTransition><Diets /></PageTransition>} />
         <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
         <Route path="/meal/:mealName" element={<PageTransition><MealDetail /></PageTransition>} />
         <Route path="/alerts" element={<PageTransition><Alerts /></PageTransition>} />

@@ -135,11 +135,33 @@ export default function Dashboard() {
     <div className="min-h-[calc(100vh-3.5rem)] px-6 py-8 max-w-5xl mx-auto">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         {/* Greeting */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-display font-extrabold">
-            Hi {profile?.name || "Alex"}! 👋
-          </h1>
-          <p className="text-lg font-display font-bold text-muted-foreground">Good Morning.</p>
+        <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-display font-extrabold">
+              Hi {profile?.name || "Alex"}! 👋
+            </h1>
+            <p className="text-lg font-display font-bold text-muted-foreground">
+              Good Morning. {profile?.preference && <span className="text-primary">{profile.preference} plan</span>}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate("/diets")}
+              className="rounded-xl font-bold"
+            >
+              Browse Diets
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => navigate("/planner")}
+              className="coral-btn"
+            >
+              <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+              Edit Plan
+            </Button>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-6">

@@ -97,9 +97,11 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
   Vegetarian: {
     breakfast: [
       { name: "Avocado Toast", calories: 280, protein: 12, fat: 15, carbs: 28, benefits: "Low Glycemic for blood sugar control", image: avocadoToast, mealTime: "Breakfast · 7am" },
+      { name: "Vegetable Poha", calories: 240, protein: 7, fat: 6, carbs: 38, benefits: "Light, easy-to-digest carbs for steady energy", image: smoothieBowl, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Quinoa Buddha Bowl", calories: 350, protein: 18, fat: 12, carbs: 42, benefits: "Complete protein with all amino acids", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Rajma Chawal (Brown Rice)", calories: 380, protein: 16, fat: 8, carbs: 60, benefits: "Plant protein + fiber-rich complex carbs", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Mixed Nuts & Seeds", calories: 170, protein: 6, fat: 14, carbs: 8, benefits: "Healthy fats for heart health", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -107,14 +109,17 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Palak Paneer & Roti", calories: 400, protein: 22, fat: 18, carbs: 38, benefits: "Iron-rich spinach with protein", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Vegetable Khichdi", calories: 320, protein: 12, fat: 8, carbs: 50, benefits: "Easy on the gut, balanced one-pot meal", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
   "Non-Vegetarian": {
     breakfast: [
       { name: "Egg White Omelette", calories: 250, protein: 22, fat: 10, carbs: 12, benefits: "High protein, low calorie start", image: avocadoToast, mealTime: "Breakfast · 7am" },
+      { name: "Smoked Salmon Bagel", calories: 340, protein: 24, fat: 12, carbs: 36, benefits: "Omega-3s for brain & heart", image: smoothieBowl, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Grilled Salmon Salad", calories: 380, protein: 32, fat: 18, carbs: 20, benefits: "Omega-3 rich for heart & brain", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Chicken Caesar Wrap", calories: 420, protein: 30, fat: 18, carbs: 36, benefits: "Lean protein with greens", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Mixed Nuts & Seeds", calories: 170, protein: 6, fat: 14, carbs: 8, benefits: "Healthy fats for heart health", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -122,14 +127,17 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Grilled Chicken & Broccoli", calories: 400, protein: 35, fat: 16, carbs: 22, benefits: "High protein for muscle recovery", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Baked Cod & Sweet Potato", calories: 380, protein: 30, fat: 10, carbs: 38, benefits: "Lean white fish with complex carbs", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
   Vegan: {
     breakfast: [
       { name: "Chia Seed Pudding", calories: 240, protein: 8, fat: 12, carbs: 28, benefits: "Omega-3 & fiber rich", image: smoothieBowl, mealTime: "Breakfast · 7am" },
+      { name: "Tofu Scramble Wrap", calories: 290, protein: 18, fat: 11, carbs: 30, benefits: "Plant protein-packed start", image: avocadoToast, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Lentil & Kale Stew", calories: 320, protein: 20, fat: 8, carbs: 44, benefits: "Iron & protein from legumes", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Chickpea Falafel Bowl", calories: 380, protein: 18, fat: 14, carbs: 48, benefits: "Mediterranean plant power", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Hummus & Veggie Sticks", calories: 160, protein: 7, fat: 9, carbs: 16, benefits: "Plant protein with fiber", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -137,14 +145,17 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Tofu Stir-Fry with Quinoa", calories: 380, protein: 24, fat: 14, carbs: 40, benefits: "Complete plant-based protein", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Black Bean Tacos", calories: 360, protein: 16, fat: 10, carbs: 52, benefits: "Fiber-rich plant meal", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
   Jain: {
     breakfast: [
       { name: "Sabudana Khichdi", calories: 290, protein: 6, fat: 12, carbs: 42, benefits: "Easy to digest, energy boost", image: avocadoToast, mealTime: "Breakfast · 7am" },
+      { name: "Methi Thepla with Curd", calories: 270, protein: 9, fat: 10, carbs: 36, benefits: "Iron-rich, gut-friendly", image: smoothieBowl, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Moong Dal Cheela", calories: 280, protein: 16, fat: 8, carbs: 36, benefits: "Protein-rich without root veggies", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Kadhi & Steamed Rice", calories: 340, protein: 12, fat: 10, carbs: 50, benefits: "Comforting, gut-soothing", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Dry Fruit Ladoo", calories: 180, protein: 5, fat: 10, carbs: 22, benefits: "Natural energy from dry fruits", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -152,14 +163,17 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Paneer Tikka (No Onion/Garlic)", calories: 350, protein: 20, fat: 22, carbs: 18, benefits: "Sattvic protein source", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Bottle Gourd Sabzi & Roti", calories: 280, protein: 8, fat: 8, carbs: 44, benefits: "Light, hydrating dinner", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
   Keto: {
     breakfast: [
       { name: "Bulletproof Coffee & Eggs", calories: 420, protein: 18, fat: 38, carbs: 3, benefits: "Sustained energy from healthy fats", image: avocadoToast, mealTime: "Breakfast · 7am" },
+      { name: "Avocado & Bacon Plate", calories: 460, protein: 20, fat: 40, carbs: 6, benefits: "Pure keto fuel", image: smoothieBowl, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Avocado Chicken Salad", calories: 450, protein: 30, fat: 34, carbs: 8, benefits: "High fat, minimal carbs for ketosis", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Zucchini Noodle Carbonara", calories: 480, protein: 28, fat: 36, carbs: 10, benefits: "Pasta-style, no carbs", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Cheese & Almond Plate", calories: 220, protein: 12, fat: 18, carbs: 4, benefits: "Keto-friendly fats & protein", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -167,14 +181,17 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Salmon with Cauliflower Mash", calories: 480, protein: 35, fat: 32, carbs: 10, benefits: "Omega-3 with low-carb sides", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Ribeye Steak & Asparagus", calories: 520, protein: 40, fat: 36, carbs: 6, benefits: "Classic keto power dinner", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
   Mediterranean: {
     breakfast: [
       { name: "Greek Yogurt with Honey & Walnuts", calories: 300, protein: 15, fat: 14, carbs: 32, benefits: "Probiotics & healthy fats", image: avocadoToast, mealTime: "Breakfast · 7am" },
+      { name: "Shakshuka", calories: 320, protein: 16, fat: 18, carbs: 22, benefits: "Eggs poached in tomato richness", image: smoothieBowl, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Mediterranean Grain Bowl", calories: 380, protein: 16, fat: 18, carbs: 42, benefits: "Heart-healthy olive oil & grains", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Tuna Niçoise Salad", calories: 360, protein: 26, fat: 16, carbs: 26, benefits: "Lean protein & Mediterranean veggies", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Olives & Feta Plate", calories: 160, protein: 6, fat: 14, carbs: 4, benefits: "Monounsaturated fats", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -182,14 +199,17 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Baked Sea Bass with Vegetables", calories: 360, protein: 30, fat: 16, carbs: 24, benefits: "Lean protein with Mediterranean herbs", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Lemon Herb Chicken & Couscous", calories: 410, protein: 32, fat: 14, carbs: 38, benefits: "Flavorful, heart-healthy dinner", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
   Paleo: {
     breakfast: [
       { name: "Sweet Potato Hash & Eggs", calories: 380, protein: 22, fat: 18, carbs: 32, benefits: "Whole food energy with healthy fats", image: avocadoToast, mealTime: "Breakfast · 7am" },
+      { name: "Berry Almond Smoothie", calories: 280, protein: 10, fat: 14, carbs: 28, benefits: "Antioxidant + healthy fats", image: smoothieBowl, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Grilled Chicken & Avocado Salad", calories: 420, protein: 35, fat: 24, carbs: 18, benefits: "Clean protein with anti-inflammatory fats", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Beef & Veggie Stir-Fry", calories: 440, protein: 34, fat: 22, carbs: 22, benefits: "Iron-rich and grain-free", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Trail Mix (Nuts & Dried Fruit)", calories: 200, protein: 6, fat: 14, carbs: 16, benefits: "Paleo-friendly natural energy", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -197,14 +217,17 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Herb-Crusted Lamb with Roasted Veggies", calories: 460, protein: 38, fat: 26, carbs: 20, benefits: "Iron-rich with antioxidant herbs", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Grilled Trout & Roasted Squash", calories: 410, protein: 32, fat: 20, carbs: 24, benefits: "Omega-3 with seasonal veggies", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
   DASH: {
     breakfast: [
       { name: "Oatmeal with Banana & Flaxseed", calories: 300, protein: 10, fat: 8, carbs: 48, benefits: "Low sodium, heart-friendly fiber", image: smoothieBowl, mealTime: "Breakfast · 7am" },
+      { name: "Whole Grain Toast & Egg", calories: 280, protein: 16, fat: 10, carbs: 32, benefits: "Balanced low-sodium start", image: avocadoToast, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Turkey & Veggie Wrap", calories: 350, protein: 28, fat: 10, carbs: 38, benefits: "Lean protein, low sodium", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Lentil & Spinach Soup", calories: 310, protein: 18, fat: 6, carbs: 44, benefits: "Potassium & magnesium powerhouse", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Unsalted Almonds & Apple", calories: 180, protein: 6, fat: 12, carbs: 16, benefits: "Potassium-rich for blood pressure", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -212,14 +235,17 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Baked Cod with Steamed Broccoli", calories: 320, protein: 32, fat: 8, carbs: 26, benefits: "Omega-3s with low sodium prep", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Grilled Chicken & Brown Rice", calories: 360, protein: 30, fat: 8, carbs: 42, benefits: "DASH-aligned classic dinner", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
   Whole30: {
     breakfast: [
       { name: "Veggie Frittata (No Dairy)", calories: 340, protein: 24, fat: 20, carbs: 14, benefits: "Clean protein, no processed ingredients", image: avocadoToast, mealTime: "Breakfast · 7am" },
+      { name: "Sweet Potato & Sausage Bowl", calories: 380, protein: 22, fat: 18, carbs: 30, benefits: "Compliant & filling", image: smoothieBowl, mealTime: "Breakfast · 8am" },
     ],
     lunch: [
       { name: "Grilled Shrimp & Zucchini Noodles", calories: 360, protein: 30, fat: 16, carbs: 22, benefits: "Grain-free, whole food nutrition", image: salmonSalad, mealTime: "Lunch · 1pm" },
+      { name: "Whole30 Chicken Cobb Salad", calories: 420, protein: 32, fat: 26, carbs: 14, benefits: "Compliant fats & lean protein", image: chickenBroccoli, mealTime: "Lunch · 1:30pm" },
     ],
     snacks: [
       { name: "Cashew Butter & Celery", calories: 170, protein: 5, fat: 14, carbs: 8, benefits: "Whole30 compliant healthy fats", image: mixedNuts, mealTime: "Snack · 4pm" },
@@ -227,6 +253,7 @@ const mealsByDiet: Record<string, { breakfast: MealItem[]; lunch: MealItem[]; sn
     ],
     dinner: [
       { name: "Herb Roasted Chicken with Sweet Potato", calories: 440, protein: 36, fat: 18, carbs: 32, benefits: "Clean eating with complex carbs", image: chickenBroccoli, mealTime: "Dinner · 7pm" },
+      { name: "Beef Meatballs & Spaghetti Squash", calories: 420, protein: 30, fat: 22, carbs: 20, benefits: "Italian-style, Whole30 approved", image: salmonSalad, mealTime: "Dinner · 8pm" },
     ],
   },
 };
