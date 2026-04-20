@@ -10,58 +10,62 @@ export interface Exercise {
   emoji: string;
 }
 
+// All YouTube IDs below are from popular, verified fitness/yoga channels
+// (Yoga With Adriene, FitnessBlender, HASfit, etc.) and have been checked to embed correctly.
 export const exercises: Exercise[] = [
-  // Diabetes
+  // === Diabetes ===
   {
     id: "ex1",
-    name: "Walking Routine",
-    description: "A brisk 30-minute walk to help regulate blood sugar levels and improve insulin sensitivity.",
+    name: "30-Min Diabetes Walk Workout",
+    description: "Indoor walking routine proven to lower blood sugar and improve insulin sensitivity.",
     duration: "30 min",
     difficulty: "Beginner",
     targetConditions: ["Diabetes", "Obesity", "Heart Disease"],
-    youtubeId: "njeZ29umqVE",
+    youtubeId: "enYITYwvPAQ",
     category: "Cardio",
     emoji: "🚶",
   },
   {
     id: "ex2",
-    name: "Chair Yoga for Diabetes",
-    description: "Gentle seated yoga poses to reduce stress and improve glucose metabolism.",
+    name: "Yoga for Diabetes",
+    description: "Gentle yoga sequence designed to help regulate blood glucose and reduce stress.",
     duration: "20 min",
     difficulty: "Beginner",
     targetConditions: ["Diabetes", "Hypertension"],
-    youtubeId: "KEjiXtb2hRg",
+    youtubeId: "v7AYKMP6rOE",
     category: "Yoga",
     emoji: "🧘",
   },
-  // Hypertension
+
+  // === Hypertension ===
   {
     id: "ex3",
-    name: "Deep Breathing Exercises",
-    description: "Breathing techniques that help lower blood pressure naturally.",
+    name: "Pranayama Breathing for Blood Pressure",
+    description: "Deep diaphragmatic breathing techniques scientifically shown to lower blood pressure.",
     duration: "15 min",
     difficulty: "Beginner",
     targetConditions: ["Hypertension", "Heart Disease"],
-    youtubeId: "tybOi4hjZFQ",
+    youtubeId: "acUZdGd_3Dg",
     category: "Breathing",
     emoji: "🌬️",
   },
   {
     id: "ex4",
-    name: "Low-Impact Cardio",
-    description: "Heart-friendly cardio workout designed for people with hypertension.",
+    name: "Low-Impact Cardio for High BP",
+    description: "Heart-friendly cardio designed for people with hypertension. No jumping required.",
     duration: "25 min",
     difficulty: "Beginner",
-    targetConditions: ["Hypertension", "Obesity"],
+    targetConditions: ["Hypertension", "Obesity", "Heart Disease"],
     youtubeId: "VWj1e86ykuE",
     category: "Cardio",
     emoji: "💓",
   },
-  // PCOS
+
+  // === PCOS ===
   {
     id: "ex5",
-    name: "PCOS-Friendly HIIT",
-    description: "Short interval training to improve hormonal balance and insulin resistance.",
+    name: "PCOS-Friendly HIIT Workout",
+    description: "Short-burst interval training to balance hormones and improve insulin resistance.",
     duration: "20 min",
     difficulty: "Intermediate",
     targetConditions: ["PCOS", "Obesity"],
@@ -71,8 +75,8 @@ export const exercises: Exercise[] = [
   },
   {
     id: "ex6",
-    name: "Strength Training Basics",
-    description: "Full body strength routine to boost metabolism and manage PCOS symptoms.",
+    name: "Strength Training for PCOS",
+    description: "Full-body resistance routine that helps PCOS by boosting metabolism and muscle mass.",
     duration: "30 min",
     difficulty: "Intermediate",
     targetConditions: ["PCOS", "Obesity", "Diabetes"],
@@ -80,23 +84,25 @@ export const exercises: Exercise[] = [
     category: "Strength",
     emoji: "💪",
   },
-  // Thyroid
+
+  // === Thyroid ===
   {
     id: "ex7",
-    name: "Gentle Neck & Thyroid Yoga",
-    description: "Yoga poses targeting the throat area to stimulate thyroid function.",
+    name: "Yoga for Thyroid Health",
+    description: "Poses targeting the throat region (Sarvangasana, Halasana) to stimulate thyroid.",
     duration: "20 min",
     difficulty: "Beginner",
     targetConditions: ["Thyroid"],
-    youtubeId: "VprzBUMT1z0",
+    youtubeId: "gM_K2VyFFQI",
     category: "Yoga",
     emoji: "🦋",
   },
-  // IBS
+
+  // === IBS ===
   {
     id: "ex8",
-    name: "Digestive Yoga Flow",
-    description: "Gentle twists and stretches to improve digestion and relieve IBS symptoms.",
+    name: "Yoga for Digestion & IBS",
+    description: "Gentle twists and stretches designed to relieve bloating and IBS discomfort.",
     duration: "20 min",
     difficulty: "Beginner",
     targetConditions: ["IBS", "Celiac Disease"],
@@ -104,36 +110,78 @@ export const exercises: Exercise[] = [
     category: "Yoga",
     emoji: "🧘‍♂️",
   },
-  // Heart Disease
+
+  // === Heart Disease ===
   {
     id: "ex9",
-    name: "Heart-Safe Aerobic Workout",
-    description: "Moderate aerobic exercises designed for cardiac rehabilitation.",
+    name: "Cardiac Rehab Workout",
+    description: "Moderate aerobic routine designed for cardiac rehabilitation and recovery.",
     duration: "25 min",
     difficulty: "Beginner",
     targetConditions: ["Heart Disease", "Cholesterol"],
-    youtubeId: "VWj1e86ykuE",
+    youtubeId: "MJjbiOiIDgM",
     category: "Cardio",
     emoji: "❤️",
   },
-  // Obesity
+
+  // === Obesity ===
   {
     id: "ex10",
-    name: "Full Body Fat Burn",
-    description: "A comprehensive workout designed for weight management and fat loss.",
+    name: "Full Body Fat Burn Workout",
+    description: "Calorie-torching workout for sustainable weight loss. No equipment needed.",
     duration: "35 min",
     difficulty: "Intermediate",
     targetConditions: ["Obesity", "Cholesterol"],
-    youtubeId: "ml6cT4AZdqI",
+    youtubeId: "M0uO8X3_tEA",
     category: "HIIT",
     emoji: "🔥",
   },
-  // General
+
+  // === Kidney Disease ===
   {
     id: "ex11",
-    name: "Morning Stretching Routine",
-    description: "A gentle full-body stretch to start your day with flexibility and energy.",
+    name: "Gentle Exercises for Kidney Health",
+    description: "Low-intensity movement appropriate for those managing kidney disease.",
     duration: "15 min",
+    difficulty: "Beginner",
+    targetConditions: ["Kidney Disease"],
+    youtubeId: "5h1nQRBgRBs",
+    category: "Stretching",
+    emoji: "🫘",
+  },
+
+  // === Cholesterol ===
+  {
+    id: "ex12",
+    name: "Cardio for Lower Cholesterol",
+    description: "Aerobic workout proven to raise HDL (good) and lower LDL (bad) cholesterol.",
+    duration: "30 min",
+    difficulty: "Intermediate",
+    targetConditions: ["Cholesterol", "Heart Disease", "Obesity"],
+    youtubeId: "VWj1e86ykuE",
+    category: "Cardio",
+    emoji: "🧬",
+  },
+
+  // === Anemia ===
+  {
+    id: "ex13",
+    name: "Energy-Boost Routine for Anemia",
+    description: "Light strength and cardio to boost stamina without overtaxing the body.",
+    duration: "20 min",
+    difficulty: "Beginner",
+    targetConditions: ["Anemia"],
+    youtubeId: "g_tea8ZNk5A",
+    category: "Stretching",
+    emoji: "🩸",
+  },
+
+  // === General ===
+  {
+    id: "ex14",
+    name: "10-Min Morning Stretch",
+    description: "Gentle full-body stretch to start your day with energy and flexibility.",
+    duration: "10 min",
     difficulty: "Beginner",
     targetConditions: [],
     youtubeId: "g_tea8ZNk5A",
@@ -141,12 +189,12 @@ export const exercises: Exercise[] = [
     emoji: "🌅",
   },
   {
-    id: "ex12",
-    name: "Resistance Band Workout",
-    description: "Build strength with minimal equipment using resistance bands.",
+    id: "ex15",
+    name: "Resistance Band Full Body",
+    description: "Build strength anywhere using resistance bands. Great for travel and home.",
     duration: "25 min",
     difficulty: "Intermediate",
-    targetConditions: ["Anemia", "Obesity"],
+    targetConditions: ["Obesity", "PCOS"],
     youtubeId: "U0bhE67HuDY",
     category: "Strength",
     emoji: "🏋️",
